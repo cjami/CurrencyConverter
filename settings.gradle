@@ -1,1 +1,1 @@
-include ':app', ':feature-currencylist', ':core', ':data-remote-revolutapi', ':data', ':data-local-room', ':testing-tools', ':testing-android-tools'
+include ':app', ':feature-currencylist', ':core', ':data-remote-revolutapi', ':data', ':data-local-room', ':testing-tools', ':testing-android-tools', ':instrumentationtests'
