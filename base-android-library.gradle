@@ -1,15 +1,16 @@
 import che.codes.currencyconverter.build.*
 
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion Android.compileSdkVersion
     defaultConfig {
-        applicationId Android.applicationId
         minSdkVersion Android.minSdkVersion
         targetSdkVersion Android.targetSdkVersion
         versionCode Android.versionCode
@@ -25,11 +26,22 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Libraries.kotlin
     implementation Libraries.Support.appcompat
     implementation Libraries.Support.coreKtx
+    implementation Libraries.Support.lifecycleExtensions
+    implementation Libraries.rxjava
+    implementation Libraries.dagger
+    kapt AnnotationPlugins.dagger
     testImplementation Libraries.Test.junit
+    testImplementation Libraries.Test.coreTesting
+    testImplementation Libraries.Test.mockito
+    testImplementation Libraries.Test.mockitoKotlin
     androidTestImplementation Libraries.AndroidTest.runner
     androidTestImplementation Libraries.AndroidTest.espressoCore
+    androidTestImplementation Libraries.AndroidTest.espressoContrib
+    androidTestImplementation Libraries.AndroidTest.espressoIntents
+    androidTestImplementation Libraries.AndroidTest.rules
+    androidTestImplementation Libraries.AndroidTest.junit
+    androidTestImplementation Libraries.AndroidTest.junitKtx
 }

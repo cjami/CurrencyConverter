@@ -1,6 +1,6 @@
 package che.codes.currencyconverter.room.models
 
-data class CurrencySnapshot(
+data class CurrencyPayload(
     val name: String,
     val rate: Double
 )

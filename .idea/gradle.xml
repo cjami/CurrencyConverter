@@ -15,7 +15,7 @@
             <option value="$PROJECT_DIR$/data-local-room" />
             <option value="$PROJECT_DIR$/data-remote-revolutapi" />
             <option value="$PROJECT_DIR$/feature-currencylist" />
-            <option value="$PROJECT_DIR$/instrumentationtests" />
+            <option value="$PROJECT_DIR$/integration-tests" />
             <option value="$PROJECT_DIR$/testing-android-tools" />
             <option value="$PROJECT_DIR$/testing-tools" />
           </set>

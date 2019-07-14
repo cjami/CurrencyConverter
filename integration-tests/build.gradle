@@ -1,0 +1,9 @@
+import che.codes.currencyconverter.build.*
+
+apply from: "$rootDir/base-android-library.gradle"
+
+dependencies {
+    implementation project(':core')
+
+    kaptAndroidTest AnnotationPlugins.dagger
+}

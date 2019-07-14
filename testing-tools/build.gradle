@@ -1,1 +1,7 @@
+import che.codes.currencyconverter.build.*
+
 apply from: "$rootDir/base-kotlin-library.gradle"
+
+dependencies {
+    implementation Libraries.gson
+}
