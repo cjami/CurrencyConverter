@@ -1,1 +1,13 @@
+import che.codes.currencyconverter.build.*
+
 apply from: "$rootDir/base-android-library.gradle"
+
+dependencies {
+    implementation project(':core')
+    testImplementation project(':testing-tools')
+    testImplementation project(':testing-android-tools')
+
+    implementation Libraries.Support.recyclerView
+    implementation Libraries.hfRecyclerView
+    implementation Libraries.picasso
+}

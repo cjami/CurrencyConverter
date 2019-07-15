@@ -1,1 +1,7 @@
 apply from: "$rootDir/base-android-library.gradle"
+
+dependencies {
+    api project(':data')
+    implementation project(':data-local-room')
+    implementation project(':data-remote-revolutapi')
+}

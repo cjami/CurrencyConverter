@@ -7,10 +7,13 @@ object Versions {
     val retrofit = "2.6.0"
     val dagger = "2.23.2"
     val rxjava = "3.0.0-RC1"
+    val rxandroid = "2.1.1"
     val rxkotlin = "2.4.0-beta.1"
     val picasso = "2.71828"
     val gson = "2.8.5"
     val room = "2.2.0-alpha01"
+
+    val hfRecyclerView = "1.1.1"
 
     object Support {
         val appcompat = "1.0.2"
@@ -61,7 +64,7 @@ object Libraries {
     val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     val rxjava = "io.reactivex.rxjava3:rxjava:${Versions.rxjava}"
-    val rxandroid = "io.reactivex.rxjava3:rxandroid:${Versions.rxjava}"
+    val rxandroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxandroid}"
     val gson = "com.google.code.gson:gson:${Versions.gson}"
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
@@ -69,6 +72,8 @@ object Libraries {
     val room = "androidx.room:room-runtime:${Versions.room}"
     val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     val roomRx = "androidx.room:room-rxjava2:${Versions.room}"
+    val hfRecyclerView = "com.mikhaellopez:hfrecyclerview-kotlin:${Versions.hfRecyclerView}"
+    val picasso = "com.squareup.picasso:picasso:${Versions.picasso}"
 
     object Support {
         val appcompat = "androidx.appcompat:appcompat:${Versions.Support.appcompat}"

@@ -31,6 +31,7 @@ dependencies {
     implementation Libraries.Support.coreKtx
     implementation Libraries.Support.lifecycleExtensions
     implementation Libraries.rxjava
+    implementation Libraries.rxandroid
     implementation Libraries.dagger
     kapt AnnotationPlugins.dagger
     testImplementation Libraries.Test.junit
