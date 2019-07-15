@@ -1,32 +1,13 @@
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+import che.codes.currencyconverter.build.*
+
+apply from: "$rootDir/base-android-library.gradle"
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-}
+    implementation project(':data')
+    implementation project(':testing-tools')
 
-sourceCompatibility = "7"
-targetCompatibility = "7"
-buildscript {
-    ext.kotlin_version = '1.3.41'
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-repositories {
-    mavenCentral()
-}
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    implementation Libraries.room
+    implementation Libraries.roomKtx
+    implementation Libraries.roomRx
+    kapt AnnotationPlugins.room
 }

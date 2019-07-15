@@ -7,6 +7,10 @@ object FileUtils {
         return Gson().fromJson(getTextFromFile(filename), type).toList()
     }
 
+    fun <T : Any> getObjectFromFile(filename: String, type: Class<T>): T {
+        return Gson().fromJson(getTextFromFile(filename), type)
+    }
+
     private fun getTextFromFile(filename: String): String {
         return this::class.java.getResource("/$filename")!!.readText()
     }

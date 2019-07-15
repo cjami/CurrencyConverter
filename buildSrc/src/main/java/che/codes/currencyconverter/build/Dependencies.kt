@@ -10,6 +10,7 @@ object Versions {
     val rxkotlin = "2.4.0-beta.1"
     val picasso = "2.71828"
     val gson = "2.8.5"
+    val room = "2.2.0-alpha01"
 
     object Support {
         val appcompat = "1.0.2"
@@ -53,6 +54,7 @@ object BuildPlugins {
 
 object AnnotationPlugins {
     val dagger = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+    val room = "androidx.room:room-compiler:${Versions.room}"
 }
 
 object Libraries {
@@ -61,6 +63,12 @@ object Libraries {
     val rxjava = "io.reactivex.rxjava3:rxjava:${Versions.rxjava}"
     val rxandroid = "io.reactivex.rxjava3:rxandroid:${Versions.rxjava}"
     val gson = "com.google.code.gson:gson:${Versions.gson}"
+    val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    val retrofitRxAdapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
+    val room = "androidx.room:room-runtime:${Versions.room}"
+    val roomKtx = "androidx.room:room-ktx:${Versions.room}"
+    val roomRx = "androidx.room:room-rxjava2:${Versions.room}"
 
     object Support {
         val appcompat = "androidx.appcompat:appcompat:${Versions.Support.appcompat}"

@@ -124,7 +124,7 @@ internal class ResultCacheCurrencyRepositoryTest {
         }
 
         @Test
-        internal fun `returns error on storage retrieve error`() {
+        fun `returns error on storage retrieve error`() {
             val e = Throwable("General Error")
             storageRetrieveError(e)
 

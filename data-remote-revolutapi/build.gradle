@@ -1,1 +1,10 @@
+import che.codes.currencyconverter.build.*
+
 apply from: "$rootDir/base-kotlin-library.gradle"
+
+dependencies {
+    implementation project(':data')
+    implementation project(':testing-tools')
+
+    implementation Libraries.retrofit
+}
