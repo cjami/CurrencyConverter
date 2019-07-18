@@ -24,6 +24,8 @@ The app polls for currency updates every second and updates the currency list ac
 
 The app features offline functionality via **Room**.
 
+If possible, the app selects an initial currency based on the user's JVM locale.
+
 The app is unit tested and has a simple integration/instrumented test that demonstrates the use of **MockWebServer** and appropriate idling of **RxJava** calls.
 
 The app follows an MVVM pattern with the use of ViewModel + LiveData components but does not use data binding.
