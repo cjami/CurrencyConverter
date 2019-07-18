@@ -16,6 +16,8 @@ Modules are set up with the following dependency structure:
 
 **Core -> Data, DataLocal, DataRemote**
 
+**DataLocal, DataRemote -> Data**
+
 Modules can depend on utility testing modules as needed.
 
 A flat hierarchy is used (with appropriate naming) to allow the modules to be clearly distinguishable in the 'Android' perspective in Android Studio.
