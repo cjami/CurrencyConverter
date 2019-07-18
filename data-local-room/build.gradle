@@ -2,6 +2,16 @@ import che.codes.currencyconverter.build.*
 
 apply from: "$rootDir/base-android-library.gradle"
 
+android{
+    defaultConfig{
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+            }
+        }
+    }
+}
+
 dependencies {
     implementation project(':data')
     testImplementation project(':testing-tools')

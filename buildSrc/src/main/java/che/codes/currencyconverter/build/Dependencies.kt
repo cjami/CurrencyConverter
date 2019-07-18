@@ -6,19 +6,20 @@ object Versions {
 
     val retrofit = "2.6.0"
     val dagger = "2.23.2"
-    val rxjava = "3.0.0-RC1"
+    val rxjava = "2.2.9"
     val rxandroid = "2.1.1"
     val rxkotlin = "2.4.0-beta.1"
     val picasso = "2.71828"
+    val picassoTransformations = "2.2.1"
     val gson = "2.8.5"
     val room = "2.2.0-alpha01"
-
-    val hfRecyclerView = "1.1.1"
+    val okhttp = "4.0.1"
 
     object Support {
         val appcompat = "1.0.2"
         val lifecycle = "2.0.0-rc01"
         val recyclerView = "1.0.0"
+        val core = "1.2.0-alpha02"
         val coreKtx = "1.2.0-alpha02"
     }
 
@@ -63,7 +64,7 @@ object AnnotationPlugins {
 object Libraries {
     val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     val dagger = "com.google.dagger:dagger:${Versions.dagger}"
-    val rxjava = "io.reactivex.rxjava3:rxjava:${Versions.rxjava}"
+    val rxjava = "io.reactivex.rxjava2:rxjava:${Versions.rxjava}"
     val rxandroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxandroid}"
     val gson = "com.google.code.gson:gson:${Versions.gson}"
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
@@ -72,13 +73,15 @@ object Libraries {
     val room = "androidx.room:room-runtime:${Versions.room}"
     val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     val roomRx = "androidx.room:room-rxjava2:${Versions.room}"
-    val hfRecyclerView = "com.mikhaellopez:hfrecyclerview-kotlin:${Versions.hfRecyclerView}"
     val picasso = "com.squareup.picasso:picasso:${Versions.picasso}"
+    val picassoTransformations = "jp.wasabeef:picasso-transformations:${Versions.picassoTransformations}"
+    val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
 
     object Support {
         val appcompat = "androidx.appcompat:appcompat:${Versions.Support.appcompat}"
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.Support.lifecycle}"
         val recyclerView = "androidx.recyclerview:recyclerview:${Versions.Support.recyclerView}"
+        val core = "androidx.core:core:${Versions.Support.core}"
         val coreKtx = "androidx.core:core-ktx:${Versions.Support.coreKtx}"
     }
 

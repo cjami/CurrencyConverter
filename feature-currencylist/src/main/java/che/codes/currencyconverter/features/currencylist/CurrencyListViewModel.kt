@@ -7,6 +7,7 @@ import che.codes.currencyconverter.data.models.Currency
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class CurrencyListViewModel(private val repository: CurrencyRepository) : ViewModel() {
 
@@ -18,6 +19,7 @@ class CurrencyListViewModel(private val repository: CurrencyRepository) : ViewMo
     fun getCurrencies() {
         disposables.add(
             repository.getCurrencies()
+                .repeatWhen { completed -> completed.delay(1, TimeUnit.SECONDS) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ data ->
@@ -40,6 +42,8 @@ class CurrencyListViewModel(private val repository: CurrencyRepository) : ViewMo
                     it.baseValue = this.baseValue
                 }
             }
+
+            result.value = Result.Success(currencyItems)
         }
     }
 

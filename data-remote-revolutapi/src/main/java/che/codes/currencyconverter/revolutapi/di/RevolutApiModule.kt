@@ -1,5 +1,6 @@
 package che.codes.currencyconverter.revolutapi.di
 
+import che.codes.currencyconverter.data.CurrencyDataSource
 import che.codes.currencyconverter.revolutapi.RevolutApiService
 import che.codes.currencyconverter.revolutapi.RevolutCurrencyDataSource
 import dagger.Module
@@ -17,7 +18,7 @@ class RevolutApiModule {
     fun provideRevolutCurrencyDataSource(
         okHttpClient: OkHttpClient,
         @Named("base.api.url") baseUrl: String
-    ): RevolutCurrencyDataSource {
+    ): CurrencyDataSource {
         val retrofit = Retrofit.Builder().baseUrl(baseUrl)
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

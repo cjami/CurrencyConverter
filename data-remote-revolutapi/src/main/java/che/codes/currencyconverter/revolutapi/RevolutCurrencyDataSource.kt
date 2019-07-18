@@ -8,9 +8,14 @@ class RevolutCurrencyDataSource(private val apiService: RevolutApiService) : Cur
 
     override fun getCurrencies(): Single<List<Currency>> {
         return apiService.getCurrencies().map { revolutData ->
-            revolutData.rates.map { rate ->
+            val revolutDataWithBase = revolutData.rates.map { rate ->
                 Currency(rate.key, rate.value)
-            }
+            }.toMutableList()
+
+            // Add Base Currency to list
+            revolutDataWithBase.add(Currency("EUR", 1.0))
+
+            revolutDataWithBase.sortedBy { it.name }.toList()
         }
     }
 }

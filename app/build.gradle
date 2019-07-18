@@ -24,24 +24,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/LICENSE-notice.md'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
+    implementation project(':core')
+    implementation project(':feature-currencylist')
+
     implementation Libraries.kotlin
     implementation Libraries.Support.appcompat
     implementation Libraries.Support.coreKtx
     implementation Libraries.Support.lifecycleExtensions
     implementation Libraries.dagger
     kapt AnnotationPlugins.dagger
-    testImplementation Libraries.Test.junit
-    testImplementation Libraries.Test.coreTesting
-    testImplementation Libraries.Test.mockito
-    testImplementation Libraries.Test.mockitoKotlin
-    androidTestImplementation Libraries.AndroidTest.runner
-    androidTestImplementation Libraries.AndroidTest.espressoCore
-    androidTestImplementation Libraries.AndroidTest.espressoContrib
-    androidTestImplementation Libraries.AndroidTest.espressoIntents
-    androidTestImplementation Libraries.AndroidTest.rules
-    androidTestImplementation Libraries.AndroidTest.junit
-    androidTestImplementation Libraries.AndroidTest.junitKtx
 }

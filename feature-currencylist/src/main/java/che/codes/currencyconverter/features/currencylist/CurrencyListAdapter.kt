@@ -1,13 +1,15 @@
 package che.codes.currencyconverter.features.currencylist
 
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
-import che.codes.currencyconverter.features.currencylist.CurrencyListAdapter.RowData
-import che.codes.currencyconverter.features.currencylist.CurrencyListAdapter.ViewHolder.ItemViewHolder
-import com.mikhaellopez.hfrecyclerviewkotlin.HFRecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
+import che.codes.currencyconverter.core.ui.util.EditTextUtils.setCursorToEnd
+import che.codes.currencyconverter.core.ui.util.KeyboardUtils
+import che.codes.currencyconverter.features.currencylist.CurrencyListAdapter.ViewHolder
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -15,74 +17,133 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.row_currency.view.*
 import java.text.NumberFormat
 
-class CurrencyListAdapter(private val baseFlagUrl: String) :
-    HFRecyclerView<RowData>(withHeader = false, withFooter = false) {
+class CurrencyListAdapter : RecyclerView.Adapter<ViewHolder>() {
 
-    private val valueEditSubject = PublishSubject.create<Double>()
-    val valueEditEvent: Observable<Double> = valueEditSubject
+    private val data: MutableList<RowData> = mutableListOf()
+    private val valueEditSubject = PublishSubject.create<ValueEditEvent>()
+    private lateinit var recyclerView: RecyclerView
+    val valueEditEvent: Observable<ValueEditEvent> = valueEditSubject
 
-    sealed class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(
+        private val view: View,
+        private val valueEditObserver: Observer<ValueEditEvent>
+    ) : RecyclerView.ViewHolder(view) {
+        private lateinit var rowData: RowData
+        private var textWatcher: TextWatcher
 
-        class ItemViewHolder(
-            private val view: View,
-            private val baseFlagUrl: String,
-            private val valueEditObserver: Observer<Double>
-        ) : ViewHolder(view) {
+        init {
+            // Emit an edit event when user edits the value
+            textWatcher = view.currency_display_value.doAfterTextChanged { text ->
+                var newValue = 0.0
+                if (text != null && text.isNotEmpty()) {
+                    newValue = rowData.formatter.parse(text.toString()).toDouble()
+                }
 
-            init {
-                view.currency_display_value.doAfterTextChanged {
-                    valueEditObserver.onNext(view.currency_display_value.text.toString().toDouble())
+                valueEditObserver.onNext(ValueEditEvent(rowData.currencyCode, newValue))
+                rowData.displayValue = rowData.formatter.format(newValue.toLong())
+                setCursorToEnd(view.currency_display_value)
+                notifyItemChanged(adapterPosition)
+            }
+
+            // Click row when value is touched
+            view.currency_display_value.setOnTouchListener { _, _ ->
+                view.callOnClick()
+                setCursorToEnd(view.currency_display_value)
+                true
+            }
+
+            // Hide keyboard when row is touched
+            view.setOnTouchListener { v, _ ->
+                KeyboardUtils.hideSoftKeyboard(v)
+                false
+            }
+
+            // Move row to top when user clicks on it
+            view.setOnClickListener {
+                moveTop()
+                view.currency_display_value.apply {
+                    requestFocus()
+                    KeyboardUtils.showSoftKeyboard(this)
+                    setCursorToEnd(this)
                 }
             }
+        }
 
-            fun bind(rowData: RowData) {
-                view.currency_code.text = rowData.currencyCode
-                view.currency_display_name.text = rowData.displayName
-                view.currency_display_value.setText(rowData.displayValue)
+        fun bind(rowData: RowData) {
+            this.rowData = rowData
 
-                Picasso.get()
-                    .load("$baseFlagUrl/${rowData.countryCode}/shiny/64.png")
-                    .into(view.currency_icon)
+            view.currency_code.text = rowData.currencyCode
+            view.currency_display_name.text = rowData.displayName
+
+            view.currency_display_value.apply {
+                removeTextChangedListener(textWatcher)
+                setText(rowData.displayValue)
+                addTextChangedListener(textWatcher)
+                setCursorToEnd(this)
+            }
+
+            Picasso.get()
+                .load("https://www.countryflags.io/${rowData.countryCode}/shiny/64.png")
+                .into(view.currency_icon)
+        }
+
+        private fun moveTop() {
+            if (adapterPosition > 0) {
+                data.removeAt(adapterPosition)
+                data.add(0, rowData)
+
+                notifyItemMoved(adapterPosition, 0)
+
+                recyclerView.scrollToPosition(0)
             }
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is ItemViewHolder -> holder.bind(getItem(position))
-        }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(data[position])
     }
 
-    override fun getHeaderView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder? {
-        return null
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layout = LayoutInflater.from(parent.context).inflate(R.layout.row_currency, parent, false)
+        return ViewHolder(layout, valueEditSubject)
     }
 
-    override fun getFooterView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder? {
-        return null
-    }
+    override fun getItemCount(): Int = data.size
 
-    override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
-        return ItemViewHolder(inflater.inflate(R.layout.row_currency, parent, false), baseFlagUrl, valueEditSubject)
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
+        (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     }
 
     fun update(currencyItems: List<CurrencyItem>) {
         if (data.isEmpty()) {
-            data = currencyItems.map { RowData(it) }
+            data.addAll(currencyItems.map { RowData(it) })
+            notifyDataSetChanged()
         } else {
-            currencyItems.forEach { item ->
-                val rowData = data.find { it.currencyCode == item.currencyCode }
-                rowData?.displayValue = rowData?.formatter?.format(item.convertedValue) ?: ""
+            data.forEachIndexed { i, rowData ->
+                if (i > 0) { // Top row is untouched
+                    currencyItems.find { it.currencyCode == rowData.currencyCode }?.let {
+                        val newDisplayValue = rowData.formatter.format(it.convertedValue.toLong()) ?: "0"
+
+                        if (rowData.displayValue != newDisplayValue) {
+                            rowData.displayValue = newDisplayValue
+                            notifyItemChanged(i)
+                        }
+                    }
+                }
             }
         }
-
-        notifyDataSetChanged()
     }
 
     class RowData(item: CurrencyItem) {
         val currencyCode: String = item.currencyCode
         val countryCode: String = item.countryCode
         val displayName: String = item.displayName
-        val formatter: NumberFormat = NumberFormat.getCurrencyInstance()
-        var displayValue: String = formatter.format(item.convertedValue)
+        val formatter: NumberFormat = NumberFormat.getInstance()
+        var displayValue: String = formatter.format(item.convertedValue.toLong())
     }
+
+    data class ValueEditEvent(val currencyCode: String, val convertedValue: Double)
 }

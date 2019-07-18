@@ -10,26 +10,26 @@ data class CurrencyItem(val currency: Currency) {
     val displayName = getDisplayName(currencyCode)
 
     private var _rate = currency.rate
-    var rate = 1.0
+    var rate
         get() = _rate
         set(value) {
-            field = value
+            _rate = value
             updateConvertedValue()
         }
 
     private var _baseValue = 1.0
-    var baseValue = 1.0
+    var baseValue
         get() = _baseValue
         set(value) {
-            field = value
+            _baseValue = value
             updateConvertedValue()
         }
 
     private var _convertedValue = baseValue * currency.rate
-    var convertedValue = 1.0
+    var convertedValue
         get() = _convertedValue
         set(value) {
-            field = value
+            _convertedValue = value
             updateBaseValue()
         }
 

@@ -28,6 +28,7 @@ android {
 dependencies {
     implementation Libraries.kotlin
     implementation Libraries.Support.appcompat
+    implementation Libraries.Support.core
     implementation Libraries.Support.coreKtx
     implementation Libraries.Support.lifecycleExtensions
     implementation Libraries.rxjava
