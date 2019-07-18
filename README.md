@@ -28,6 +28,8 @@ A flat hierarchy is used (with appropriate naming) to allow the modules to be cl
 
 * If possible, the app selects an initial currency based on the user's JVM locale.
 
+* Currencies are formatted according to the user's JVM locale.
+
 * Flags are loaded online from https://www.countryflags.io. **Picasso** disk caches these by default so they can be used when the app is offline (although not if the first run is offline).
 
 * The app is unit tested and has a simple integration/instrumented test that demonstrates the use of **MockWebServer** and appropriate idling of **RxJava** calls.
