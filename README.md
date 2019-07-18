@@ -20,4 +20,4 @@ The app polls for currency updates every second and updates the currency list ac
 
 The app features offline functionality.
 
-The app is unit tested and has a simple integration/instrumented test. This integration test demonstrates the use of a MockWebServer and appropriate idling of RxJava calls.
+The app is unit tested and has a simple integration/instrumented test that demonstrates the use of a MockWebServer and appropriate idling of RxJava calls.
