@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import che.codes.currencyconverter.core.ui.util.EditTextUtils.setCursorToEnd
 import che.codes.currencyconverter.core.ui.util.KeyboardUtils
 import che.codes.currencyconverter.features.currencylist.CurrencyListAdapter.ViewHolder
+import che.codes.currencyconverter.features.currencylist.CurrencyUtils.getLocalCurrencyCode
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -99,7 +100,6 @@ class CurrencyListAdapter : RecyclerView.Adapter<ViewHolder>() {
         }
     }
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
     }
@@ -120,6 +120,13 @@ class CurrencyListAdapter : RecyclerView.Adapter<ViewHolder>() {
     fun update(currencyItems: List<CurrencyItem>) {
         if (data.isEmpty()) {
             data.addAll(currencyItems.map { RowData(it) })
+
+            // Place local currency on top
+            data.find { it.currencyCode == getLocalCurrencyCode() }?.let {
+                data.remove(it)
+                data.add(0, it)
+            }
+
             notifyDataSetChanged()
         } else {
             data.forEachIndexed { i, rowData ->

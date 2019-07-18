@@ -16,10 +16,11 @@ class CurrencyListViewModel(private val repository: CurrencyRepository) : ViewMo
 
     private var currencyItems: List<CurrencyItem> = emptyList()
 
-    fun getCurrencies() {
+    fun pollCurrencies(refreshIntervalInSeconds: Long) {
         disposables.add(
             repository.getCurrencies()
-                .repeatWhen { completed -> completed.delay(1, TimeUnit.SECONDS) }
+                .repeatWhen { completed -> completed.delay(refreshIntervalInSeconds, TimeUnit.SECONDS) }
+                .takeUntil { refreshIntervalInSeconds <= 0 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ data ->

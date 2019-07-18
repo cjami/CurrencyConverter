@@ -14,4 +14,8 @@ object CurrencyUtils {
             false -> ""
         }
     }
+
+    fun getLocalCurrencyCode(): String {
+        return Currency.getInstance(Locale.getDefault()).currencyCode
+    }
 }

@@ -16,6 +16,8 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_currency_list.*
 import javax.inject.Inject
 
+private const val REFRESH_RATE = 1L
+
 class CurrencyListFragment : Fragment() {
 
     private lateinit var currencyAdapter: CurrencyListAdapter
@@ -53,7 +55,7 @@ class CurrencyListFragment : Fragment() {
             adapter = currencyAdapter
         }
 
-        viewModel.getCurrencies()
+        viewModel.pollCurrencies(REFRESH_RATE)
         viewModel.result.observe(this, Observer<Result> { handleResult(it) })
     }
 

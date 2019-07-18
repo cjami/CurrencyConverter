@@ -8,7 +8,10 @@ import che.codes.currencyconverter.data.CurrencyRepository
 import che.codes.currencyconverter.data.models.Currency
 import che.codes.currencyconverter.features.currencylist.CurrencyListViewModel.Result
 import che.codes.currencyconverter.testing.FileUtils.getListFromFile
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -32,12 +35,12 @@ internal class CurrencyListViewModelTest {
     }
 
     @Nested
-    inner class GetCurrencies {
+    inner class PollCurrencies {
         @Test
         fun `interacts with repository on success`() {
             sourceSuccess()
 
-            sut.getCurrencies()
+            sut.pollCurrencies(0)
 
             verify(repositoryMock).getCurrencies()
         }
@@ -47,7 +50,7 @@ internal class CurrencyListViewModelTest {
             sourceError(Throwable("General Error"))
             cacheSuccess()
 
-            sut.getCurrencies()
+            sut.pollCurrencies(0)
 
             verify(repositoryMock).getCachedCurrencies()
         }
@@ -57,7 +60,7 @@ internal class CurrencyListViewModelTest {
             sourceSuccess()
             cacheSuccess()
 
-            sut.getCurrencies()
+            sut.pollCurrencies(0)
 
             verify(repositoryMock, never()).getCachedCurrencies()
         }
@@ -68,7 +71,7 @@ internal class CurrencyListViewModelTest {
             sourceError(e)
             cacheError(e)
 
-            sut.getCurrencies()
+            sut.pollCurrencies(0)
 
             verify(observerMock).onChanged(Result.Error(e))
         }
@@ -77,7 +80,7 @@ internal class CurrencyListViewModelTest {
         fun `returns correct currencies on success`() {
             sourceSuccess()
 
-            sut.getCurrencies()
+            sut.pollCurrencies(0)
 
             verify(observerMock).onChanged(Result.Success(testCurrencyItems))
         }
@@ -87,7 +90,7 @@ internal class CurrencyListViewModelTest {
             sourceError(Throwable("General Error"))
             cacheSuccess()
 
-            sut.getCurrencies()
+            sut.pollCurrencies(0)
 
             verify(observerMock).onChanged(Result.Success(testCurrencyItems))
         }
