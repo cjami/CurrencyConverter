@@ -8,12 +8,16 @@ CurrencyConverter is a simple multi-module app that handles live currency conver
 
 Modules are set up with the following dependency structure:
 
-App -> Core, Features
 
-Features -> Core
+**App -> Core, Features**
 
-Core -> Data, DataLocal, DataRemote
+**Features -> Core**
+
+**Core -> Data, DataLocal, DataRemote**
+
 
 The app polls for currency updates every second and updates the currency list accordingly.
 
 The app features offline functionality.
+
+The app is unit tested and has a simple integration/instrumented test. This integration test demonstrates the use of a MockWebServer and appropriate idling of RxJava calls.
