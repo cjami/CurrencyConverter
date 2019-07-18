@@ -41,7 +41,6 @@ dependencies {
     implementation Libraries.kotlin
     implementation Libraries.Support.appcompat
     implementation Libraries.Support.coreKtx
-    implementation Libraries.Support.lifecycleExtensions
     implementation Libraries.dagger
     kapt AnnotationPlugins.dagger
 }

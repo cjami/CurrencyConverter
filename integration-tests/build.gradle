@@ -1,9 +1,61 @@
 import che.codes.currencyconverter.build.*
 
-apply from: "$rootDir/base-android-library.gradle"
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Android.compileSdkVersion
+    defaultConfig {
+        minSdkVersion Android.minSdkVersion
+        targetSdkVersion Android.targetSdkVersion
+        versionCode Android.versionCode
+        versionName Android.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/LICENSE-notice.md'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
 
 dependencies {
     implementation project(':core')
+    implementation project(':feature-currencylist')
+    implementation project(':data-local-room')
+    implementation project(':data-remote-revolutapi')
+
+    implementation Libraries.kotlin
+    implementation Libraries.rxjava
+    implementation Libraries.rxandroid
+    implementation Libraries.dagger
+    implementation Libraries.Support.appcompat
+    implementation Libraries.Support.coreKtx
+    implementation Libraries.Support.lifecycleExtensions
+    kapt AnnotationPlugins.dagger
+    testImplementation Libraries.Test.junit4
+    testImplementation Libraries.Test.coreTesting
+    testImplementation Libraries.Test.mockito
+    testImplementation Libraries.Test.mockitoKotlin
+    androidTestImplementation Libraries.AndroidTest.runner
+    androidTestImplementation Libraries.AndroidTest.espressoCore
+    androidTestImplementation Libraries.AndroidTest.espressoContrib
+    androidTestImplementation Libraries.AndroidTest.rules
+    androidTestImplementation Libraries.AndroidTest.junit
+    androidTestImplementation Libraries.AndroidTest.junitKtx
+    debugImplementation Libraries.AndroidTest.fragment
+
+    testImplementation project(':testing-tools')
+    androidTestImplementation project(':testing-android-tools')
 
     kaptAndroidTest AnnotationPlugins.dagger
+    androidTestImplementation Libraries.AndroidTest.mockwebserver
 }

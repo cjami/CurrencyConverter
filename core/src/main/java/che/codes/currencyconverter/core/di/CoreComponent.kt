@@ -27,6 +27,7 @@ interface CoreComponent {
 
     interface Provider {
         fun provideCoreComponent(): CoreComponent
+        fun setCoreComponent(coreComponent: CoreComponent)
     }
 
     companion object {

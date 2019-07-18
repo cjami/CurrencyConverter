@@ -5,4 +5,8 @@ apply from: "$rootDir/base-android-library.gradle"
 dependencies {
     implementation Libraries.Test.junit
     implementation Libraries.Test.coreTesting
+    implementation Libraries.Support.recyclerView
+
+    implementation Libraries.AndroidTest.rxidler
+
 }

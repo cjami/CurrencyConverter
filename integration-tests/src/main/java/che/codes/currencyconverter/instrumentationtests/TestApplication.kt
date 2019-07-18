@@ -1,11 +1,11 @@
-package che.codes.currencyconverter
+package che.codes.currencyconverter.instrumentationtests
 
 import android.app.Application
 import che.codes.currencyconverter.core.di.AppContextModule
 import che.codes.currencyconverter.core.di.CoreComponent
 import che.codes.currencyconverter.core.di.DaggerCoreComponent
 
-class CurrencyConverterApplication : Application(), CoreComponent.Provider {
+class TestApplication: Application(), CoreComponent.Provider {
 
     private var coreComponent: CoreComponent? = null
 

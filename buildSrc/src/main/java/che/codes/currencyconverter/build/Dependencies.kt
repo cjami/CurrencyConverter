@@ -17,7 +17,7 @@ object Versions {
 
     object Support {
         val appcompat = "1.0.2"
-        val lifecycle = "2.0.0-rc01"
+        val lifecycle = "2.2.0-alpha02"
         val recyclerView = "1.0.0"
         val core = "1.2.0-alpha02"
         val coreKtx = "1.2.0-alpha02"
@@ -25,6 +25,7 @@ object Versions {
 
     object Test {
         val junit = "5.5.0"
+        val junit4 = "4.12"
         val mockito = "1.0.6"
         val mockitoKotlin = "2.1.0"
         val coreTesting = "2.0.0-rc01"
@@ -34,11 +35,12 @@ object Versions {
     object AndroidTest {
         val espresso = "3.1.1"
         val rxidler = "0.9.1"
-        val runner = "1.3.0-alpha01"
+        val runner = "1.1.1"
         val mockwebserver = "4.0.1"
         val rules = "1.1.0"
         val junit = "1.1.0"
         val junitKtx = "1.1.0"
+        val fragment = "1.2.0-alpha01"
     }
 }
 
@@ -87,6 +89,7 @@ object Libraries {
 
     object Test {
         val junit = "org.junit.jupiter:junit-jupiter-api:${Versions.Test.junit}"
+        val junit4 = "junit:junit:${Versions.Test.junit4}"
         val mockito = "org.mockito:mockito-core:${Versions.Test.mockito}"
         val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.Test.mockitoKotlin}"
         val coreTesting = "androidx.arch.core:core-testing:${Versions.Test.coreTesting}"
@@ -103,5 +106,6 @@ object Libraries {
         val rules = "androidx.test:rules:${Versions.AndroidTest.rules}"
         val junit = "androidx.test.ext:junit:${Versions.AndroidTest.junit}"
         val junitKtx = "androidx.test.ext:junit-ktx:${Versions.AndroidTest.junitKtx}"
+        val fragment = "androidx.fragment:fragment-testing:${Versions.AndroidTest.fragment}"
     }
 }

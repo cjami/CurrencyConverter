@@ -20,7 +20,7 @@ internal class RevolutCurrencyDataSourceTest {
     private lateinit var sut: RevolutCurrencyDataSource
     private val apiServiceMock: RevolutApiService = mock()
     private val testPayload = getObjectFromFile("revolut_payload.json", RevolutCurrencyData::class.java)
-    private val expectedData = getListFromFile("currencies.json", Array<Currency>::class.java)
+    private val expectedData = getListFromFile("expected_currencies.json", Array<Currency>::class.java)
 
     @BeforeEach
     fun setUp() {
