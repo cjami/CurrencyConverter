@@ -32,7 +32,7 @@ A flat hierarchy is used (with appropriate naming) to allow the modules to be cl
 
 * The app is unit tested and has a simple integration/instrumented test that demonstrates the use of **MockWebServer** and appropriate idling of **RxJava** calls.
 
-* The app follows an MVVM pattern with the use of ViewModel + LiveData components but does not use data binding.
+* The app follows an **MVVM** pattern with the use of **ViewModel + LiveData** components but does not use data binding.
 
 * The project takes advantage of the `buildSrc` folder to hook in dependency properties and versioning (mainly library dependencies) to be used in all modules. This allows gradle build files to look more expressive with statements such as: `implementation Libraries.Support.appcompat`
 
