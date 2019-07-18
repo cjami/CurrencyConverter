@@ -18,6 +18,8 @@ Modules are set up with the following dependency structure:
 
 Modules can depend on utility testing modules as needed.
 
+A flat hierarchy is used (with appropriate naming) to allow the modules to be clearly distinguishable in the 'Android' perspective in Android Studio.
+
 ### Notes:
 
 * The app polls for currency updates every second and updates the currency list accordingly.
@@ -30,7 +32,7 @@ Modules can depend on utility testing modules as needed.
 
 * The app follows an MVVM pattern with the use of ViewModel + LiveData components but does not use data binding.
 
-* The project takes advantage of the buildSrc folder to hook in dependency properties and versioning (mainly library dependencies) to be used in all modules. This allows gradle build files to look more expressive with statements such as: `implementation Libraries.Support.appcompat`
+* The project takes advantage of the `buildSrc` folder to hook in dependency properties and versioning (mainly library dependencies) to be used in all modules. This allows gradle build files to look more expressive with statements such as: `implementation Libraries.Support.appcompat`
 
 * Modules can also inherit configurations from `base-android-library.gradle` and `base-kotlin-library.gradle` to avoid lots of messy gradle files.
 
