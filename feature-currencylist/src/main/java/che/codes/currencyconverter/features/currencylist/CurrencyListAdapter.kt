@@ -42,8 +42,8 @@ class CurrencyListAdapter : RecyclerView.Adapter<ViewHolder>() {
 
                 valueEditObserver.onNext(ValueEditEvent(rowData.currencyCode, newValue))
                 rowData.displayValue = rowData.formatter.format(newValue.toLong())
-                setCursorToEnd(view.currency_display_value)
-                notifyItemChanged(adapterPosition)
+
+                syncDisplayValue()
             }
 
             // Click row when value is touched
@@ -59,7 +59,7 @@ class CurrencyListAdapter : RecyclerView.Adapter<ViewHolder>() {
                 false
             }
 
-            // Hide keyboard when input on editor action
+            // Hide keyboard on editor action
             view.currency_display_value.setOnEditorActionListener { v, _, _ ->
                 KeyboardUtils.hideSoftKeyboard(v)
                 true // Consume action
@@ -82,12 +82,7 @@ class CurrencyListAdapter : RecyclerView.Adapter<ViewHolder>() {
             view.currency_code.text = rowData.currencyCode
             view.currency_display_name.text = rowData.displayName
 
-            view.currency_display_value.apply {
-                removeTextChangedListener(textWatcher)
-                setText(rowData.displayValue)
-                addTextChangedListener(textWatcher)
-                setCursorToEnd(this)
-            }
+            syncDisplayValue()
 
             Picasso.get()
                 .load("https://www.countryflags.io/${rowData.countryCode}/shiny/64.png")
@@ -102,6 +97,15 @@ class CurrencyListAdapter : RecyclerView.Adapter<ViewHolder>() {
                 notifyItemMoved(adapterPosition, 0)
 
                 recyclerView.scrollToPosition(0)
+            }
+        }
+
+        private fun syncDisplayValue(){
+            view.currency_display_value.apply {
+                removeTextChangedListener(textWatcher)
+                setText(rowData.displayValue)
+                addTextChangedListener(textWatcher)
+                setCursorToEnd(this)
             }
         }
     }
