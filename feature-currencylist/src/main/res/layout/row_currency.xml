@@ -39,5 +39,6 @@
             android:layout_centerVertical="true"
             android:textAppearance="@android:style/TextAppearance.Material.Large"
             android:layout_marginEnd="10dp"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:imeOptions="actionNone"/>
 </RelativeLayout>

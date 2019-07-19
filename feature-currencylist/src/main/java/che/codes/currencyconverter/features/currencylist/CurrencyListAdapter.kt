@@ -59,6 +59,12 @@ class CurrencyListAdapter : RecyclerView.Adapter<ViewHolder>() {
                 false
             }
 
+            // Hide keyboard when input on editor action
+            view.currency_display_value.setOnEditorActionListener { v, _, _ ->
+                KeyboardUtils.hideSoftKeyboard(v)
+                true // Consume action
+            }
+
             // Move row to top when user clicks on it
             view.setOnClickListener {
                 moveTop()
