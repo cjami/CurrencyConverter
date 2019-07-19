@@ -17,7 +17,7 @@ data class CurrencyItem(val currency: Currency) {
             updateConvertedValue()
         }
 
-    private var _baseValue = 1.0
+    private var _baseValue = 100.0
     var baseValue
         get() = _baseValue
         set(value) {
