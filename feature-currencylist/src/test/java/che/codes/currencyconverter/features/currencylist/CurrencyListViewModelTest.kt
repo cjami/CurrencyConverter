@@ -27,6 +27,8 @@ internal class CurrencyListViewModelTest {
     private val observerMock: Observer<Result> = mock()
     private val testCurrencyData: List<Currency> = getListFromFile("currencies.json", Array<Currency>::class.java)
     private val testCurrencyItems: List<CurrencyItem> = testCurrencyData.map { CurrencyItem(it) }
+    private val testEur10Items: List<CurrencyItem> =
+        testCurrencyData.map { CurrencyItem(it).apply { baseValue = 10.0 } }
 
     @BeforeEach
     fun setUp() {
@@ -35,12 +37,12 @@ internal class CurrencyListViewModelTest {
     }
 
     @Nested
-    inner class PollCurrencies {
+    inner class StartPolling {
         @Test
         fun `interacts with repository on success`() {
             sourceSuccess()
 
-            sut.pollCurrencies(0)
+            sut.startPolling(0)
 
             verify(repositoryMock).getCurrencies()
         }
@@ -50,7 +52,7 @@ internal class CurrencyListViewModelTest {
             sourceError(Throwable("General Error"))
             cacheSuccess()
 
-            sut.pollCurrencies(0)
+            sut.startPolling(0)
 
             verify(repositoryMock).getCachedCurrencies()
         }
@@ -60,7 +62,7 @@ internal class CurrencyListViewModelTest {
             sourceSuccess()
             cacheSuccess()
 
-            sut.pollCurrencies(0)
+            sut.startPolling(0)
 
             verify(repositoryMock, never()).getCachedCurrencies()
         }
@@ -71,7 +73,7 @@ internal class CurrencyListViewModelTest {
             sourceError(e)
             cacheError(e)
 
-            sut.pollCurrencies(0)
+            sut.startPolling(0)
 
             verify(observerMock).onChanged(Result.Error(e))
         }
@@ -80,7 +82,7 @@ internal class CurrencyListViewModelTest {
         fun `returns correct currencies on success`() {
             sourceSuccess()
 
-            sut.pollCurrencies(0)
+            sut.startPolling(0)
 
             verify(observerMock).onChanged(Result.Success(testCurrencyItems))
         }
@@ -90,9 +92,32 @@ internal class CurrencyListViewModelTest {
             sourceError(Throwable("General Error"))
             cacheSuccess()
 
-            sut.pollCurrencies(0)
+            sut.startPolling(0)
 
             verify(observerMock).onChanged(Result.Success(testCurrencyItems))
+        }
+    }
+
+    @Nested
+    inner class StopPolling {
+        @Test
+        fun `clears disposables`() {
+            sut.stopPolling()
+
+            assertThat(sut.disposables.size(), equalTo(0))
+        }
+    }
+
+    @Nested
+    inner class ChangeCurrencyItem {
+        @Test
+        fun `updates other currency items correctly`() {
+            sourceSuccess()
+
+            sut.startPolling(0)
+            sut.changeCurrencyItem("EUR", 10.0)
+
+            verify(observerMock).onChanged(Result.Success(testEur10Items))
         }
     }
 

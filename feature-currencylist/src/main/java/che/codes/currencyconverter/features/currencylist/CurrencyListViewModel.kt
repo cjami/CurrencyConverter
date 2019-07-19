@@ -16,7 +16,7 @@ class CurrencyListViewModel(private val repository: CurrencyRepository) : ViewMo
 
     private var currencyItems: List<CurrencyItem> = emptyList()
 
-    fun pollCurrencies(refreshIntervalInSeconds: Long) {
+    fun startPolling(refreshIntervalInSeconds: Long) {
         disposables.add(
             repository.getCurrencies()
                 .repeatWhen { completed -> completed.delay(refreshIntervalInSeconds, TimeUnit.SECONDS) }
@@ -30,6 +30,10 @@ class CurrencyListViewModel(private val repository: CurrencyRepository) : ViewMo
                     getCachedCurrencies()
                 })
         )
+    }
+
+    fun stopPolling(){
+        disposables.clear()
     }
 
     fun changeCurrencyItem(currencyCode: String, convertedValue: Double) {
@@ -83,7 +87,7 @@ class CurrencyListViewModel(private val repository: CurrencyRepository) : ViewMo
 
     override fun onCleared() {
         super.onCleared()
-        disposables.clear()
+        stopPolling()
     }
 
     sealed class Result {

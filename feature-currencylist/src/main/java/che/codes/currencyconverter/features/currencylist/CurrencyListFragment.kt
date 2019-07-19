@@ -55,8 +55,17 @@ class CurrencyListFragment : Fragment() {
             adapter = currencyAdapter
         }
 
-        viewModel.pollCurrencies(REFRESH_RATE)
         viewModel.result.observe(this, Observer<Result> { handleResult(it) })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.startPolling(REFRESH_RATE)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopPolling()
     }
 
     private fun handleResult(result: Result) {
